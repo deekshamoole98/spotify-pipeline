@@ -1,0 +1,53 @@
+version: 2
+
+sources:
+  - name: spotify_analytics
+    database: spotify_analytics
+    schema: spotify_analytics
+    tables:
+      - name: raw_tracks
+        description: "Raw Spotify tracks ingested from CSV, partitioned by date and genre."
+        columns:
+          - name: track_id
+            description: "Spotify track ID (string)"
+            tests: [not_null]
+          - name: popularity
+            description: "Spotify popularity score 0–100"
+            tests:
+              - not_null
+              - accepted_range:
+                  min_value: 0
+                  max_value: 100
+          - name: genre
+            description: "Track genre (partition key)"
+            tests: [not_null]
+
+models:
+  - name: top_tracks_by_genre
+    description: "Top 10 tracks per genre ranked by popularity."
+    columns:
+      - name: genre
+        tests: [not_null]
+      - name: popularity_rank
+        tests: [not_null]
+
+  - name: audio_features_by_genre
+    description: "Average audio features per genre for sonic fingerprint analysis."
+    columns:
+      - name: genre
+        tests: [not_null, unique]
+
+  - name: artist_popularity
+    description: "Top 100 artists by average track popularity, min 3 tracks."
+    columns:
+      - name: primary_artist
+        tests: [not_null, unique]
+
+  - name: popularity_vs_audio_features
+    description: "Audio feature averages broken down by popularity tier and genre."
+    columns:
+      - name: popularity_tier
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['viral', 'popular', 'mid', 'niche', 'obscure']

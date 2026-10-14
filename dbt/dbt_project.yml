@@ -1,0 +1,12 @@
+name: spotify_pipeline
+version: '1.0.0'
+config-version: 2
+
+profile: spotify_pipeline
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  spotify_pipeline:
+    +materialized: view

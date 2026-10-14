@@ -1,0 +1,31 @@
+# Secrets
+.env
+*.env
+
+# Local data output
+data/
+dataset.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/.user.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
