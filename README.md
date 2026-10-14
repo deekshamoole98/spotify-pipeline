@@ -24,7 +24,7 @@ Spotify Dataset (CSV)
         ↓
   dbt (4 analytical models as Athena views)
         ↓
-  Amazon QuickSight / Dashboard
+  Tableau Dashboard
 ```
 
 ---
@@ -106,12 +106,9 @@ Output lands in `data/date=<today>/genre=<genre>/tracks.json`.
 
 1. Create S3 bucket and update `S3_BUCKET` in `.env`
 2. Create IAM role using policies in `infra/iam/`
-3. Deploy `ingest.py` as a Lambda function
-4. Set environment variables on the Lambda
-5. Schedule with EventBridge (daily or weekly)
-6. Run `athena_schema.sql` in Athena to create the external table
-7. Run `MSCK REPAIR TABLE` after first load to register partitions
-8. Run dbt models: `dbt run --profiles-dir .`
+3. Run `athena_schema.sql` in Athena to create the external table
+4. Run `MSCK REPAIR TABLE` after first load to register partitions
+5. Run dbt models: `dbt run --profiles-dir .`
 
 ---
 
@@ -124,3 +121,7 @@ Output lands in `data/date=<today>/genre=<genre>/tracks.json`.
 **`payload`-style storage** — audio features stored as flat fields (not nested) for direct Athena column access without `json_extract`.
 
 **dbt as views** — models are lightweight Athena views rather than materialized tables; avoids storage cost for a portfolio dataset while keeping the transformation layer explicit and testable.
+
+
+
+
