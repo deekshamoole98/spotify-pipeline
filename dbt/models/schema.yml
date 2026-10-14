@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: spotify_analytics
-    database: spotify_analytics
+    database: AwsDataCatalog
     schema: spotify_analytics
     tables:
       - name: raw_tracks
